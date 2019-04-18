@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div align="left";>
+		<form>
+	      Campaign:<textarea id="campaign" rows="6" cols="20"></textarea>
+          links:<textarea id="link" rows="3" cols="30"></textarea>
+          Country:<textarea id="country" rows="3" cols="10"></textarea>
+          CTR:<textarea id="ctr" rows="3" cols="10"></textarea>
+		  AGENTID:<textarea id="agent" rows="3" cols="10"></textarea>
+		   </br>
+		   <input type="button" onclick="COPY()" value="Generate"/>
+        <input type="reset" onclick="Clear()" value="Clear"/>
+		  </form>
+        <div id="Result"></div>
+        <br/>
+		
+    </div>
+ 
+</body>
+<script>
+function escapeHtml(str)
+	{
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+    }
+	
+	function COPY()
+	{
+
+        var ip = document.getElementById('campaign').value.split("\n");
+        var Output = ip.slice(0, ip.length);
+		var link = document.getElementById('link').value.split("\n");
+		var lOutput = link.slice(0, link.length);
+		var country = document.getElementById('country').value.split("\n");
+		var CNOutput = country.slice(0, country.length);
+		var ctr = document.getElementById('ctr').value.split("\n");
+		var CTOutput = ctr.slice(0, ctr.length);
+		var FinalResult = "";
+		var Agent = document.getElementById('agent').value.split("\n");
+		var AgOutput = Agent.slice(0, Agent.length);
+		t=0;s=0;r=0;p=0;q=0
+		
+		while(t < ip.length && s < link.length && r < country.length && p < ctr.length && q < Agent.length)
+		{
+			FinalResult += "update Campaigns3 set install_pnames = '"+escapeHtml(Output[t])+""+lOutput[s]+"', delete_pnames='"+CNOutput[r]+"', open_pnames='{\"limit\":500}', ctr='"+CTOutput[p]+"', agent_from='"+AgOutput[q]+"', agent_to='"+AgOutput[q]+"', date_from=now(), date_to='2018-08-31 23:59:59' where id="+AgOutput[q]+";<br>";
+			t++;s++;r++;p++;q++;	
+		}
+		document.getElementById('Result').innerHTML = FinalResult;
+		
+	}
+
+    function Clear() {
+        document.getElementById('Result').innerHTML = "";
+    }
+</script>
+
+</html>

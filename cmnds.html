@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div align="left";>
+		<form>
+        <textarea id="iplist" rows="6" cols="50"></textarea>
+		1st AGENTID=
+        <textarea id="agent" rows="3" cols="5"></textarea>
+		<div></div>
+        <input type="button" onclick="STOP()" value = "1st command" />
+        <input type="button" onclick="UPDATE()" value="update"/>
+        <input type="button" onclick="COPY()" value="2nd command"/>
+        <input type="reset" onclick="Clear()" value="Clear"/>
+		</form>
+        <div id="Result"></div>
+        <br/>
+		
+    </div>
+ 
+</body>
+<script>
+    function STOP() {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "ssh " + Output.join(" mkdir data0 data1 data2 data3 data4 data5 data6 data7 data8 data9<br>" + "ssh ") + " mkdir data0 data1 data2 data3 data4 data5 data6 data7 data8 data9 "
+        document.getElementById('Result').innerHTML = FinalResult;
+    }
+
+    function UPDATE() {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "ssh " + Output.join(" sh startup.sh<br>" + "ssh ") + " sh startup.sh "
+        document.getElementById('Result').innerHTML = FinalResult;
+    }
+	
+	function COPY()
+	{
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+		var FinalResult = "";
+		var i = document.getElementById('agent').value ;
+		
+		
+		for(x in Output)
+		{
+		var j = 0;
+		for(k=1; k<=10; k++)
+		{
+			FinalResult += "ssh "+Output[x]+" \"cat work/main"+j+"/Config.py | head -10 > data"+j+"/Config.py && echo 'AGENTID = "+i+"' >> data"+j+"/Config.py && cat work/main"+j+"/Config.py | tail -187 >> data"+j+"/Config.py\"<br>";
+			i++;
+			j++;
+		}
+		}
+		document.getElementById('Result').innerHTML = FinalResult;
+		
+	}
+
+    function Clear() {
+        document.getElementById('Result').innerHTML = "";
+    }
+</script>
+
+</html>

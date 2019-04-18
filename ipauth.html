@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+  <link rel="stylesheet" href="def.css"  />
+</head>
+
+<head>
+<body>
+
+
+<h1 >Appamplify System Launch Commands</h1>
+    <div align="left">
+    <div align ="right" >
+    <p id="datetime"></p>
+    </div>
+        <form>
+        <textarea id="iplist" rows="12" cols="80"></textarea>
+         Enter First Agent Id=
+        <textarea id="agent" rows="3" cols="5"></textarea>
+        <div>
+        <input type="button" onclick="NEWIPAUTH()" value=" IP Auth" class ="button"/>
+        <input type="button" onclick="STOP()" value = "1st Cmmd"  class ="button"/>
+        <input type="button" onclick="COPY()" value="2nd Cmmd" class ="button"/>
+        <input type="button" onclick="COPY2()" value="3rd Cmmd "class ="button"/>
+        <input type="button" onclick="COPY3()" value="4th Cmmd" class ="button"/>
+        <input type="button" onclick="COPY4()" value="5th Cmmd"class ="button"/>
+        <input type="button" onclick="maddy()" value="RemoveDupl"class ="button"/>
+        <input type="button" onclick="UPDATE()" value="StartUp"class ="button"/>
+        <input type="reset" onclick="Clear()" value="Clear"class ="button"/>
+        </form>
+        </div>
+        <div id="Result"></div>
+        <br/>
+        <div id="cardContainer" ></div>
+    </div>
+    
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var dt = new Date();
+document.getElementById("datetime").innerHTML = dt.toLocaleString();
+    
+    function STOP() {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "ssh -oStrictHostKeyChecking=no " + Output.join(" mkdir data0 data1 data2 data3 data4 data5 data6 data7 data8 data9 data10 data11 data12 data13 data14 data15 data16 data17 data18 data19 data20 data21 data22 data23 data24 data25 data26 data27 data28 data29 data30 data31 data32 data33 data34 data35 data36 data37 data38 data39 data40 data41 data42 data43 data44 data45 data46 data47 data48 data49<br>" + "ssh -oStrictHostKeyChecking=no ") + " mkdir data0 data1 data2 data3 data4 data5 data6 data7 data8 data9 data10 data11 data12 data13 data14 data15 data16 data17 data18 data19 data20 data21 data22 data23 data24 data25 data26 data27 data28 data29 data30 data31 data32 data33 data34 data35 data36 data37 data38 data39 data40 data41 data42 data43 data44 data45 data46 data47 data48 data49 "
+        document.getElementById('Result').innerHTML = FinalResult;
+    }
+
+    function UPDATE() {
+        document.getElementById('cardContainer').innerHTML= "";
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "ssh " + Output.join(" sh startup.sh<br>" + "ssh ") + " sh startup.sh "
+        document.getElementById('Result').innerHTML = FinalResult;
+    }
+    
+    function COPY()
+    {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "";
+        var i = document.getElementById('agent').value ;
+        
+        
+        for(x in Output)
+        {
+        var j = 0;
+        for(k=1; k<=50; k++)
+        {
+            FinalResult += "ssh "+Output[x]+" \"cat work/main"+j+"/Config.py | head -10 > data"+j+"/Config.py && echo 'AGENTID = "+i+"' >> data"+j+"/Config.py && cat work/main"+j+"/Config.py | tail -187 >> data"+j+"/Config.py\"<br>";
+            i++;
+            j++;
+        }
+        }
+        document.getElementById('Result').innerHTML = FinalResult;
+        
+    }
+
+function NEWIPAUTH()
+{
+var Result = document.getElementById('iplist').value.split("\n");
+var Output = Result.slice(0, Result.length);
+var FinalResult = "ssh-keygen -f \"/home/ubuntu/.ssh/known_hosts\" -R " + Output.join("<br>" + "ssh-keygen -f \"/home/ubuntu/.ssh/known_hosts\" -R ")
+document.getElementById('Result').innerHTML = FinalResult;
+}
+
+    function Clear() {
+        document.getElementById('Result').innerHTML = "";
+    }
+    function maddy()
+        {
+            var value = $("#iplist").val();
+            var numbersArray = value.split('\n');
+            var validNumbers = [];
+            var duplicateNumbers = [];
+            var OriginalNumber=[];
+            var inValidNumbers = [];
+
+            // remove empty elements
+            var index = numbersArray.indexOf("");
+            while(index !== -1)
+            {
+                numbersArray.splice(index,1);
+                index = numbersArray.indexOf("");
+            }
+
+           for (var $i = 0; $i < numbersArray.length; $i++)
+             {
+                var number = numbersArray[$i];
+                if (validNumbers.indexOf(number) !== -1 || inValidNumbers.indexOf(number) !== -1)
+                 {
+                    duplicateNumbers.push(number);
+
+
+                } 
+                else 
+                    validNumbers.push(number);
+            }
+
+            document.getElementById('cardContainer').innerHTML= "";
+            var html='';
+for (var i=0; i<=validNumbers.length-1; i++) {
+    html+='<div>'+validNumbers[i]+'</div>';
+}
+document.getElementById('cardContainer').innerHTML+= html;
+           
+        }
+        function COPY2()
+    {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult = "scp script.sh ubuntu@" + Output.join(":/home/ubuntu/<br>" + "scp script.sh ubuntu@") + ":/home/ubuntu/"
+        
+        document.getElementById('Result').innerHTML = FinalResult;
+        
+    }
+    function COPY3()
+    {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult =  "ssh " + Output.join(" sh script.sh<br>" + "ssh ") + " sh script.sh "
+        document.getElementById('Result').innerHTML = FinalResult;
+        
+    }
+    function COPY4()
+    {
+        var Result = document.getElementById('iplist').value.split("\n");
+        var Output = Result.slice(0, Result.length);
+        var FinalResult =  "ssh " + Output.join(" sudo rm script.sh<br>" + "ssh ") + " sudo rm script.sh "
+        document.getElementById('Result').innerHTML = FinalResult;
+        
+    }
+
+
+</script>
+<footer>Copyright &copy; appamplify.com</footer>
+
+</html>
